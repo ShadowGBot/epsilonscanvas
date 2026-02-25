@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment UI v4 • Component Playground</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors:{bg:'#F7FBFC',surface:'#D6E6F2',accent:'#B9D7EA',primary:'#769FCD',text:'#10243A',muted:'#4E637A',line:'#C8D9E8',pink:'#BE5985'},
+      borderRadius:{card:'14px',btn:'12px'},
+      boxShadow:{soft:'0 1px 2px rgba(16,24,40,.06)',mdsoft:'0 10px 24px rgba(16,24,40,.08)'}
+    }}};
+  </script>
+  <style>
+    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+    .tab.active{background:#D6E6F2;border-color:#B9D7EA}
+    .panel{display:none}.panel.active{display:block}
+    .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  </style>
+</head>
+<body class="bg-bg text-text min-h-screen">
+  <div class="max-w-7xl mx-auto px-5 md:px-10 py-8 md:py-12 space-y-8">
+    <header class="space-y-3">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Investment UI v4</h1>
+      <p class="text-muted">Component playground for ETA handoff (Plus Jakarta Sans, minimal light, rounded).</p>
+      <div class="flex flex-wrap gap-2">
+        <button class="tab active px-3 py-2 rounded-btn border border-line text-sm" onclick="openPanel('core',this)">Core Components</button>
+        <button class="tab px-3 py-2 rounded-btn border border-line text-sm" onclick="openPanel('finance',this)">Finance Blocks</button>
+        <button class="tab px-3 py-2 rounded-btn border border-line text-sm" onclick="openPanel('forms',this)">Forms + Modal</button>
+        <button class="tab px-3 py-2 rounded-btn border border-line text-sm" onclick="openPanel('snippets',this)">ETA Snippets</button>
+      </div>
+    </header>
+
+    <section id="core" class="panel active space-y-6">
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft"><p class="text-xs text-muted uppercase">Regime</p><p class="text-xl font-semibold mt-2">Risk-off</p></div>
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft"><p class="text-xs text-muted uppercase">Confidence</p><p class="text-xl font-semibold mt-2">Medium</p></div>
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft"><p class="text-xs text-muted uppercase">Last update</p><p class="text-xl font-semibold mt-2">09:30 CET</p></div>
+      </div>
+      <div class="rounded-card border border-line bg-white p-5 shadow-soft space-y-4">
+        <h3 class="font-semibold">Buttons, badges, alerts</h3>
+        <div class="flex flex-wrap gap-2">
+          <button class="px-4 py-2 rounded-btn bg-primary text-white font-semibold">Primary</button>
+          <button class="px-4 py-2 rounded-btn border border-line bg-white">Secondary</button>
+          <button class="px-4 py-2 rounded-btn bg-accent">Soft</button>
+          <span class="px-2.5 py-1 rounded-full text-xs bg-surface">Info badge</span>
+          <span class="px-2.5 py-1 rounded-full text-xs bg-pink/15 text-pink">Risk badge</span>
+        </div>
+        <div class="rounded-btn border border-amber-200 bg-amber-50 text-amber-800 p-3 text-sm">⚠️ Breadth remains weak. Avoid concentration drift.</div>
+      </div>
+    </section>
+
+    <section id="finance" class="panel space-y-6">
+      <div class="rounded-card border border-line bg-white shadow-soft overflow-hidden">
+        <div class="p-5 border-b border-line flex items-center justify-between"><h3 class="font-semibold">Ticker table</h3><span class="text-xs text-muted">sortable-ready</span></div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-bg text-muted text-xs uppercase"><tr><th class="px-5 py-3 text-left">Ticker</th><th class="px-5 py-3 text-left">Price</th><th class="px-5 py-3 text-left">Δ%</th><th class="px-5 py-3 text-left">Signal</th></tr></thead>
+            <tbody>
+              <tr class="border-t border-line"><td class="px-5 py-4 font-medium">AAPL</td><td class="px-5 py-4">266.18</td><td class="px-5 py-4 text-emerald-700">+1.02%</td><td class="px-5 py-4">Add (small)</td></tr>
+              <tr class="border-t border-line"><td class="px-5 py-4 font-medium">MSFT</td><td class="px-5 py-4">384.47</td><td class="px-5 py-4 text-rose-700">-2.67%</td><td class="px-5 py-4">Wait</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold mb-3">Sparkline chart card</h3>
+          <svg viewBox="0 0 300 90" class="w-full"><polyline fill="none" stroke="#769FCD" stroke-width="3" points="0,62 40,54 80,58 120,44 160,60 200,49 240,40 300,45"/></svg>
+        </div>
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold mb-3">Action checklist</h3>
+          <div class="space-y-2 text-sm">
+            <label class="flex items-center gap-2"><input type="checkbox" class="accent-primary"> Recheck breadth at +90m</label>
+            <label class="flex items-center gap-2"><input type="checkbox" class="accent-primary"> Validate top mover news links</label>
+            <label class="flex items-center gap-2"><input type="checkbox" class="accent-primary"> Confirm portfolio risk caps</label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="forms" class="panel space-y-6">
+      <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+        <h3 class="font-semibold mb-4">Filter bar</h3>
+        <div class="grid md:grid-cols-4 gap-3">
+          <input class="border border-line rounded-btn px-3 py-2" value="2026-02-24">
+          <select class="border border-line rounded-btn px-3 py-2"><option>EU/Nordic</option><option>US Open</option></select>
+          <input class="border border-line rounded-btn px-3 py-2" placeholder="Ticker (AAPL)">
+          <button class="rounded-btn bg-primary text-white font-semibold px-4">Apply filters</button>
+        </div>
+      </div>
+      <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+        <h3 class="font-semibold mb-3">Modal trigger demo</h3>
+        <button class="px-4 py-2 rounded-btn bg-primary text-white" onclick="openModal()">Open modal</button>
+      </div>
+    </section>
+
+    <section id="snippets" class="panel space-y-6">
+      <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+        <h3 class="font-semibold mb-3">ETA implementation notes</h3>
+        <ul class="list-disc pl-5 text-sm text-muted space-y-1">
+          <li>Use Plus Jakarta Sans as default body/headline font.</li>
+          <li>Token map: primary=#769FCD, surface=#D6E6F2, border=#C8D9E8.</li>
+          <li>Border radius: card 14px, button/input 12px.</li>
+          <li>Spacing: 8px grid, card padding 20–24px, section gap 24–40px.</li>
+          <li>Always include empty/loading/error states.</li>
+        </ul>
+      </div>
+      <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+        <h3 class="font-semibold mb-3">Snippet: Card + header</h3>
+<pre class="code text-xs bg-slate-50 p-3 rounded-btn overflow-x-auto">&lt;div className="rounded-[14px] border border-[#C8D9E8] bg-white p-5 shadow-sm"&gt;
+  &lt;p className="text-xs uppercase text-[#4E637A]"&gt;Regime&lt;/p&gt;
+  &lt;p className="mt-2 text-xl font-semibold"&gt;Risk-off&lt;/p&gt;
+&lt;/div&gt;</pre>
+      </div>
+    </section>
+  </div>
+
+  <div id="modal" class="fixed inset-0 bg-slate-900/40 hidden items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-card border border-line bg-white shadow-mdsoft">
+      <div class="p-5 border-b border-line flex justify-between items-center"><h3 class="font-semibold">Rebalance settings</h3><button onclick="closeModal()">✕</button></div>
+      <div class="p-5 space-y-3">
+        <input class="w-full border border-line rounded-btn px-3 py-2" value="Nordic Growth Watch">
+        <select class="w-full border border-line rounded-btn px-3 py-2"><option>Medium Risk</option><option>Low Risk</option></select>
+      </div>
+      <div class="p-5 border-t border-line flex justify-end gap-2"><button class="px-3 py-2 rounded-btn border border-line" onclick="closeModal()">Cancel</button><button class="px-3 py-2 rounded-btn bg-primary text-white">Save</button></div>
+    </div>
+  </div>
+
+  <script>
+    function openPanel(id,btn){
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    function openModal(){const m=document.getElementById('modal');m.classList.remove('hidden');m.classList.add('flex');}
+    function closeModal(){const m=document.getElementById('modal');m.classList.add('hidden');m.classList.remove('flex');}
+    document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal') closeModal();});
+  </script>
+</body>
+</html>
