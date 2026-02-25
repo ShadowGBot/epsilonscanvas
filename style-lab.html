@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Epsilon Style Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#F7FBFC; --surface:#D6E6F2; --accent:#B9D7EA; --primary:#769FCD;
+      --text:#10243A; --muted:#4E637A; --line:#C8D9E8;
+      --pink-50:#FFEDFA; --pink-200:#FFB8E0; --pink-400:#EC7FA9; --pink-600:#BE5985;
+      --radius-card:12px; --radius-btn:10px;
+      --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+      --shadow-md:0 6px 16px rgba(16,24,40,.08);
+      --shadow-lg:0 12px 28px rgba(16,24,40,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+    .wrap{max-width:1120px;margin:0 auto;padding:28px 18px 56px}
+    h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+    .lead{color:var(--muted);margin:0 0 24px}
+    .grid{display:grid;gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-card);box-shadow:var(--shadow-sm);padding:16px}
+    .card h3{margin:0 0 8px;font-size:17px}
+    .sub{font-size:13px;color:var(--muted)}
+    .swatches{display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;border-radius:10px;border:1px solid var(--line)}
+    .sw{padding:16px 10px;min-height:86px;display:flex;flex-direction:column;justify-content:flex-end;font-size:12px;font-weight:600}
+    .sw small{display:block;font-weight:500;opacity:.85}
+    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    button{appearance:none;border:1px solid transparent;border-radius:var(--radius-btn);padding:10px 14px;font:600 14px Inter,sans-serif;cursor:pointer;transition:.2s}
+    .btn-primary{background:var(--primary);color:white;box-shadow:var(--shadow-sm)}
+    .btn-primary:hover{filter:brightness(0.96)}
+    .btn-ghost{background:white;border-color:var(--line);color:var(--text)}
+    .btn-soft{background:var(--accent);color:#1A3551}
+    .pill{border-radius:999px;padding:6px 10px;font-size:12px;background:#fff;border:1px solid var(--line)}
+    .input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--text)}
+    .input:focus{outline:2px solid rgba(118,159,205,.35);border-color:var(--primary)}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+    th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+    .up{color:#0E7A3E;font-weight:600}.down{color:#B02A4A;font-weight:600}
+
+    .mode-minimal .show-minimal{display:block}.mode-minimal .show-glassy,.mode-minimal .show-fintech{display:none}
+    .mode-glassy .show-glassy{display:block}.mode-glassy .show-minimal,.mode-glassy .show-fintech{display:none}
+    .mode-fintech .show-fintech{display:block}.mode-fintech .show-minimal,.mode-fintech .show-glassy{display:none}
+
+    .glassy-panel{background:linear-gradient(135deg,rgba(255,255,255,.65),rgba(255,255,255,.4));backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,.7);border-radius:14px;box-shadow:var(--shadow-md);padding:16px}
+    .fintech{background:#0F172A;color:#E2E8F0;border:1px solid #1E293B}
+    .fintech .sub{color:#94A3B8}
+    .fintech table th,.fintech table td{border-bottom-color:#1E293B}
+    .fintech .btn-primary{background:#3B82F6}
+
+    .mt{margin-top:16px}.mt2{margin-top:24px}.mt3{margin-top:32px}
+    @media (max-width:900px){.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="mode-minimal">
+  <div class="wrap">
+    <h1>Epsilon Style Lab</h1>
+    <p class="lead">Test page for your design system defaults: <strong>minimal + light + rounded</strong>. Switch mode to preview variants.</p>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <strong>Mode Preview</strong>
+          <div class="sub">Minimal (default), Glassy, Fintech</div>
+        </div>
+        <div class="row">
+          <button class="btn-ghost" onclick="setMode('mode-minimal')">Minimal</button>
+          <button class="btn-ghost" onclick="setMode('mode-glassy')">Glassy</button>
+          <button class="btn-ghost" onclick="setMode('mode-fintech')">Fintech</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="mt2">
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Blue palette (default)</h3>
+          <div class="swatches">
+            <div class="sw" style="background:#F7FBFC">#F7FBFC<small>bg</small></div>
+            <div class="sw" style="background:#D6E6F2">#D6E6F2<small>surface</small></div>
+            <div class="sw" style="background:#B9D7EA">#B9D7EA<small>accent</small></div>
+            <div class="sw" style="background:#769FCD;color:#fff">#769FCD<small>primary</small></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Pink palette (optional accent)</h3>
+          <div class="swatches">
+            <div class="sw" style="background:#FFEDFA">#FFEDFA</div>
+            <div class="sw" style="background:#FFB8E0">#FFB8E0</div>
+            <div class="sw" style="background:#EC7FA9">#EC7FA9</div>
+            <div class="sw" style="background:#BE5985;color:#fff">#BE5985</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt2 show-minimal">
+      <div class="card">
+        <h3>Minimal component feel</h3>
+        <div class="row mt">
+          <button class="btn-primary">Primary action</button>
+          <button class="btn-soft">Secondary</button>
+          <button class="btn-ghost">Tertiary</button>
+          <span class="pill">Rounded buttons: 10px</span>
+        </div>
+        <div class="grid cols-2 mt2">
+          <div>
+            <label class="sub">Portfolio name</label>
+            <input class="input" placeholder="Nordic Growth Watch" />
+          </div>
+          <div>
+            <label class="sub">Risk profile</label>
+            <input class="input" placeholder="Defensive" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt2 show-glassy">
+      <div class="glassy-panel">
+        <h3 style="margin:0 0 8px">Glassy variant</h3>
+        <p class="sub" style="margin:0 0 12px">Use sparingly for hero/overview, keep tables minimal for readability.</p>
+        <div class="row">
+          <button class="btn-primary">Open dashboard</button>
+          <button class="btn-ghost">Share report</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt2 show-fintech">
+      <div class="card fintech">
+        <h3>Fintech variant</h3>
+        <p class="sub">Higher contrast for data-heavy workflows.</p>
+        <div class="row mt">
+          <button class="btn-primary">Rebalance</button>
+          <button class="btn-ghost" style="border-color:#334155;color:#E2E8F0;background:#111827">Watchlist</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt3">
+      <div class="card">
+        <h3>Table style sample</h3>
+        <table>
+          <thead><tr><th>Ticker</th><th>Price</th><th>Δ%</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td>GOOG</td><td>311.69</td><td class="down">-2.33%</td><td>Hold</td></tr>
+            <tr><td>NVDA</td><td>191.55</td><td class="up">+0.08%</td><td>Watch</td></tr>
+            <tr><td>AAPL</td><td>266.18</td><td class="up">+1.02%</td><td>Add (small)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function setMode(mode){
+      document.body.classList.remove('mode-minimal','mode-glassy','mode-fintech');
+      document.body.classList.add(mode);
+    }
+  </script>
+</body>
+</html>
