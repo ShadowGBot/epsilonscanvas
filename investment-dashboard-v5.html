@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment UI v5 • Production Candidate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors:{bg:'#F7FBFC',surface:'#D6E6F2',accent:'#B9D7EA',primary:'#769FCD',text:'#10243A',muted:'#4E637A',line:'#C8D9E8',danger:'#BE5985'},
+      borderRadius:{card:'14px',btn:'12px'},
+      boxShadow:{soft:'0 1px 2px rgba(16,24,40,.06)',mdsoft:'0 10px 24px rgba(16,24,40,.08)'}
+    }}};
+  </script>
+  <style>
+    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+    .view{display:none}.view.active{display:block}
+    .nav-item.active{background:#D6E6F2;border-color:#B9D7EA;color:#10243A}
+  </style>
+</head>
+<body class="bg-bg text-text min-h-screen">
+  <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[250px_1fr]">
+    <aside class="border-r border-line bg-white p-4 lg:p-5">
+      <div class="mb-6">
+        <h1 class="font-bold text-lg">Epsilon Finance UI</h1>
+        <p class="text-xs text-muted mt-1">v5 production candidate</p>
+      </div>
+      <nav class="space-y-2">
+        <button class="nav-item active w-full text-left px-3 py-2 rounded-btn border border-transparent text-sm" onclick="showView('dashboard', this)">Dashboard</button>
+        <button class="nav-item w-full text-left px-3 py-2 rounded-btn border border-transparent text-sm" onclick="showView('positions', this)">Positions</button>
+        <button class="nav-item w-full text-left px-3 py-2 rounded-btn border border-transparent text-sm" onclick="showView('reports', this)">Reports</button>
+        <button class="nav-item w-full text-left px-3 py-2 rounded-btn border border-transparent text-sm" onclick="showView('states', this)">UI States</button>
+      </nav>
+    </aside>
+
+    <main class="p-4 md:p-8 space-y-6">
+      <header class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold">Investment Operations</h2>
+          <p class="text-muted">Responsive dashboard with explicit loading/empty/error states.</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="px-4 py-2 rounded-btn border border-line bg-white text-sm">Share</button>
+          <button class="px-4 py-2 rounded-btn bg-primary text-white text-sm font-semibold">Run Report</button>
+        </div>
+      </header>
+
+      <section id="view-dashboard" class="view active space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="rounded-card border border-line bg-white p-5 shadow-soft"><p class="text-xs text-muted uppercase">Regime</p><p class="text-xl font-semibold mt-2">Risk-off</p></div>
+          <div class="rounded-card border border-line bg-white p-5 shadow-soft"><p class="text-xs text-muted uppercase">Portfolio P/L</p><p class="text-xl font-semibold mt-2 text-danger">-1.4%</p></div>
+          <div class="rounded-card border border-line bg-white p-5 shadow-soft"><p class="text-xs text-muted uppercase">Confidence</p><p class="text-xl font-semibold mt-2">Medium</p></div>
+          <div class="rounded-card border border-line bg-white p-5 shadow-soft"><p class="text-xs text-muted uppercase">Updated</p><p class="text-xl font-semibold mt-2">09:30 CET</p></div>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+          <div class="xl:col-span-8 rounded-card border border-line bg-white shadow-soft overflow-hidden">
+            <div class="p-5 border-b border-line flex items-center justify-between">
+              <h3 class="font-semibold">Ticker Movers</h3>
+              <div class="flex gap-2 text-xs">
+                <button class="px-2.5 py-1 rounded-full bg-surface">All</button>
+                <button class="px-2.5 py-1 rounded-full border border-line">Gainers</button>
+                <button class="px-2.5 py-1 rounded-full border border-line">Losers</button>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm min-w-[560px]">
+                <thead class="bg-bg text-muted text-xs uppercase"><tr><th class="px-5 py-3 text-left">Ticker</th><th class="px-5 py-3 text-left">Price</th><th class="px-5 py-3 text-left">Δ%</th><th class="px-5 py-3 text-left">Signal</th></tr></thead>
+                <tbody>
+                  <tr class="border-t border-line"><td class="px-5 py-4 font-medium">AAPL</td><td class="px-5 py-4">266.18</td><td class="px-5 py-4 text-emerald-700">+1.02%</td><td class="px-5 py-4">Add (small)</td></tr>
+                  <tr class="border-t border-line"><td class="px-5 py-4 font-medium">MSFT</td><td class="px-5 py-4">384.47</td><td class="px-5 py-4 text-danger">-2.67%</td><td class="px-5 py-4">Wait</td></tr>
+                  <tr class="border-t border-line"><td class="px-5 py-4 font-medium">MA</td><td class="px-5 py-4">496.03</td><td class="px-5 py-4 text-danger">-4.68%</td><td class="px-5 py-4">No chase</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="xl:col-span-4 space-y-4">
+            <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+              <h3 class="font-semibold">Today takeaway</h3>
+              <ul class="mt-3 list-disc pl-5 text-sm text-muted space-y-1">
+                <li>Avoid concentration drift.</li>
+                <li>Re-risk only with breadth confirmation.</li>
+                <li>Stage entries, no chase.</li>
+              </ul>
+            </div>
+            <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+              <h3 class="font-semibold">Quick actions</h3>
+              <div class="mt-3 grid grid-cols-2 gap-2 text-sm">
+                <button class="px-3 py-2 rounded-btn border border-line bg-white">Rebalance</button>
+                <button class="px-3 py-2 rounded-btn border border-line bg-white">Open report</button>
+                <button class="px-3 py-2 rounded-btn border border-line bg-white">Export CSV</button>
+                <button class="px-3 py-2 rounded-btn border border-line bg-white">Set alert</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-positions" class="view">
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold">Positions</h3>
+          <p class="text-sm text-muted mt-2">Responsive list placeholder for holdings and risk contribution.</p>
+        </div>
+      </section>
+
+      <section id="view-reports" class="view">
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold">Reports</h3>
+          <p class="text-sm text-muted mt-2">Recent report cards and permalink actions.</p>
+        </div>
+      </section>
+
+      <section id="view-states" class="view space-y-4">
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold">Loading state</h3>
+          <div class="mt-3 space-y-2 animate-pulse">
+            <div class="h-4 bg-slate-200 rounded w-1/3"></div>
+            <div class="h-3 bg-slate-200 rounded w-full"></div>
+            <div class="h-3 bg-slate-200 rounded w-5/6"></div>
+          </div>
+        </div>
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold">Empty state</h3>
+          <p class="text-sm text-muted mt-2">No reports found for selected date/session.</p>
+          <button class="mt-3 px-4 py-2 rounded-btn border border-line bg-white text-sm">Clear filters</button>
+        </div>
+        <div class="rounded-card border border-danger/30 bg-danger/10 p-5 shadow-soft">
+          <h3 class="font-semibold text-danger">Error state</h3>
+          <p class="text-sm mt-2 text-danger">Failed to load report data. Please retry.</p>
+          <button class="mt-3 px-4 py-2 rounded-btn bg-danger text-white text-sm">Retry</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function showView(name, btn){
+      document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+      document.getElementById('view-'+name).classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
