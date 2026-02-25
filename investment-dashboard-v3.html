@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment Dashboard v3 • Tabs, Modal, Charts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors:{bg:'#F7FBFC',surface:'#D6E6F2',accent:'#B9D7EA',primary:'#769FCD',text:'#10243A',muted:'#4E637A',line:'#C8D9E8'},
+        borderRadius:{card:'14px',btn:'12px'},
+        boxShadow:{soft:'0 1px 2px rgba(16,24,40,.06)',mdsoft:'0 10px 24px rgba(16,24,40,.08)'}
+      }}
+    }
+  </script>
+  <style>
+    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+    .tab-btn.active{background:#D6E6F2;color:#10243A;border-color:#B9D7EA}
+    .tab-panel{display:none}.tab-panel.active{display:block}
+    .density-compact .row-pad{padding-top:10px;padding-bottom:10px}
+    .density-balanced .row-pad{padding-top:14px;padding-bottom:14px}
+    .density-spacious .row-pad{padding-top:18px;padding-bottom:18px}
+    .chip{padding:.25rem .6rem;border-radius:999px;font-size:.72rem;font-weight:600}
+  </style>
+</head>
+<body class="bg-bg text-text min-h-screen density-balanced">
+  <div class="max-w-7xl mx-auto px-5 md:px-10 py-8 md:py-12 space-y-8">
+    <header class="flex flex-wrap gap-3 items-start justify-between">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Investment Dashboard v3</h1>
+        <p class="text-muted mt-2">Plus Jakarta Sans • Tabs • Modal • Chart cards • Density toggle</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button class="px-3 py-2 rounded-btn border border-line bg-white text-sm" onclick="setDensity('compact')">Compact</button>
+        <button class="px-3 py-2 rounded-btn border border-line bg-surface text-sm" onclick="setDensity('balanced')">Balanced</button>
+        <button class="px-3 py-2 rounded-btn border border-line bg-white text-sm" onclick="setDensity('spacious')">Spacious</button>
+        <button class="px-4 py-2 rounded-btn bg-primary text-white text-sm font-semibold" onclick="openModal()">Open Rebalance Modal</button>
+      </div>
+    </header>
+
+    <section class="rounded-card border border-line bg-white p-5 md:p-6 shadow-soft grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div><p class="text-xs uppercase tracking-wide text-muted">Regime</p><p class="text-xl font-semibold mt-2">Risk-off</p></div>
+      <div><p class="text-xs uppercase tracking-wide text-muted">Main Driver</p><p class="text-sm mt-2">Weak breadth in high-beta names</p></div>
+      <div><p class="text-xs uppercase tracking-wide text-muted">Posture</p><p class="text-sm mt-2 font-semibold text-amber-700">Defensive / selective adds</p></div>
+      <div><p class="text-xs uppercase tracking-wide text-muted">Updated</p><p class="text-sm mt-2">2026-02-24 09:30 CET</p></div>
+    </section>
+
+    <main class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+      <section class="xl:col-span-8 space-y-6">
+        <div class="rounded-card border border-line bg-white shadow-soft overflow-hidden">
+          <div class="p-5 border-b border-line flex items-center justify-between">
+            <h2 class="font-semibold text-lg">Overview Tabs</h2>
+            <div class="text-xs text-muted">Choose view</div>
+          </div>
+          <div class="p-4 border-b border-line flex gap-2 flex-wrap">
+            <button class="tab-btn active px-3 py-2 rounded-btn border border-line text-sm" data-tab="pulse" onclick="showTab('pulse', this)">Pulse</button>
+            <button class="tab-btn px-3 py-2 rounded-btn border border-line text-sm" data-tab="alpha" onclick="showTab('alpha', this)">Alpha vs Beta</button>
+            <button class="tab-btn px-3 py-2 rounded-btn border border-line text-sm" data-tab="news" onclick="showTab('news', this)">News Links</button>
+          </div>
+          <div class="p-5">
+            <div id="tab-pulse" class="tab-panel active">
+              <p class="text-sm text-muted mb-3">Macro pulse + confidence card view.</p>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="rounded-btn border border-line bg-bg p-4"><p class="text-xs text-muted">S&P 500</p><p class="font-semibold mt-1">6,837.75 <span class="text-rose-700">-0.92%</span></p></div>
+                <div class="rounded-btn border border-line bg-bg p-4"><p class="text-xs text-muted">NASDAQ</p><p class="font-semibold mt-1">22,627.27 <span class="text-rose-700">-0.94%</span></p></div>
+                <div class="rounded-btn border border-line bg-bg p-4"><p class="text-xs text-muted">BTC-USD</p><p class="font-semibold mt-1">63,286.3 <span class="text-rose-700">-2.22%</span></p></div>
+              </div>
+            </div>
+            <div id="tab-alpha" class="tab-panel">
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="rounded-btn border border-line p-4 bg-bg"><h3 class="font-semibold">Alpha</h3><p class="text-sm text-muted mt-2">Preserve flexibility and avoid concentration drift.</p></div>
+                <div class="rounded-btn border border-line p-4 bg-bg"><h3 class="font-semibold">Beta</h3><p class="text-sm text-muted mt-2">Add on first bounce in quality mega caps.</p></div>
+              </div>
+              <p class="text-sm mt-3"><span class="chip bg-accent">Resolution</span> Re-risk only if breadth improves with price.</p>
+            </div>
+            <div id="tab-news" class="tab-panel">
+              <ul class="list-disc pl-5 text-sm space-y-2">
+                <li><a class="text-primary font-medium" href="#">Payment rails selloff extends in morning trade</a></li>
+                <li><a class="text-primary font-medium" href="#">Mega-cap divergence narrows late session</a></li>
+                <li><a class="text-primary font-medium" href="#">Macro desk flags weak participation breadth</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-card border border-line bg-white shadow-soft overflow-hidden">
+          <div class="p-5 border-b border-line flex items-center justify-between">
+            <h2 class="font-semibold text-lg">Ticker Movers</h2>
+            <span class="text-xs text-muted">Density-sensitive rows</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-bg text-muted text-xs uppercase">
+                <tr>
+                  <th class="px-5 py-3 text-left">Ticker</th><th class="px-5 py-3 text-left">Price</th><th class="px-5 py-3 text-left">Δ%</th><th class="px-5 py-3 text-left">Signal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t border-line"><td class="px-5 row-pad font-medium">AAPL</td><td class="px-5 row-pad">266.18</td><td class="px-5 row-pad text-emerald-700">+1.02%</td><td class="px-5 row-pad">Add (small)</td></tr>
+                <tr class="border-t border-line"><td class="px-5 row-pad font-medium">MSFT</td><td class="px-5 row-pad">384.47</td><td class="px-5 row-pad text-rose-700">-2.67%</td><td class="px-5 row-pad">Wait</td></tr>
+                <tr class="border-t border-line"><td class="px-5 row-pad font-medium">MA</td><td class="px-5 row-pad">496.03</td><td class="px-5 row-pad text-rose-700">-4.68%</td><td class="px-5 row-pad">No chase</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <aside class="xl:col-span-4 space-y-6">
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold text-lg mb-3">Chart Card: 7D Sentiment</h3>
+          <svg viewBox="0 0 320 120" class="w-full h-auto">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#769FCD" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#769FCD" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polyline fill="url(#g1)" stroke="none" points="0,95 0,72 45,58 90,63 135,50 180,66 225,56 270,44 320,48 320,95"/>
+            <polyline fill="none" stroke="#769FCD" stroke-width="3" points="0,72 45,58 90,63 135,50 180,66 225,56 270,44 320,48"/>
+          </svg>
+          <p class="text-sm text-muted mt-2">Interpretation: sentiment recovering but still fragile.</p>
+        </div>
+
+        <div class="rounded-card border border-line bg-white p-5 shadow-soft">
+          <h3 class="font-semibold text-lg mb-3">Chart Card: Exposure Split</h3>
+          <div class="flex items-center gap-4">
+            <div class="w-28 h-28 rounded-full" style="background:conic-gradient(#769FCD 0 58%, #B9D7EA 58% 82%, #D6E6F2 82% 100%);"></div>
+            <div class="text-sm space-y-2">
+              <div><span class="inline-block w-3 h-3 rounded-full bg-primary mr-2"></span>Core 58%</div>
+              <div><span class="inline-block w-3 h-3 rounded-full bg-accent mr-2"></span>Tactical 24%</div>
+              <div><span class="inline-block w-3 h-3 rounded-full bg-surface mr-2 border border-line"></span>Cash 18%</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div id="modal" class="fixed inset-0 bg-slate-900/40 hidden items-center justify-center p-4">
+    <div class="w-full max-w-lg rounded-card border border-line bg-white shadow-mdsoft">
+      <div class="p-5 border-b border-line flex items-center justify-between">
+        <h3 class="font-semibold text-lg">Rebalance Plan</h3>
+        <button class="text-muted" onclick="closeModal()">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div>
+          <label class="text-xs text-muted uppercase tracking-wide">Portfolio</label>
+          <input class="w-full mt-1 border border-line rounded-btn px-3 py-2" value="Nordic Growth Watch" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="text-xs text-muted uppercase tracking-wide">Max risk</label><input class="w-full mt-1 border border-line rounded-btn px-3 py-2" value="Medium"/></div>
+          <div><label class="text-xs text-muted uppercase tracking-wide">Horizon</label><input class="w-full mt-1 border border-line rounded-btn px-3 py-2" value="2-6 weeks"/></div>
+        </div>
+      </div>
+      <div class="p-5 border-t border-line flex justify-end gap-2">
+        <button class="px-4 py-2 rounded-btn border border-line bg-white" onclick="closeModal()">Cancel</button>
+        <button class="px-4 py-2 rounded-btn bg-primary text-white">Apply plan</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(name, btn){
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      document.getElementById('tab-'+name).classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    function openModal(){ const m=document.getElementById('modal'); m.classList.remove('hidden'); m.classList.add('flex'); }
+    function closeModal(){ const m=document.getElementById('modal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+    function setDensity(mode){
+      document.body.classList.remove('density-compact','density-balanced','density-spacious');
+      document.body.classList.add('density-'+mode);
+    }
+    document.getElementById('modal').addEventListener('click', (e)=>{ if(e.target.id==='modal') closeModal(); });
+  </script>
+</body>
+</html>
